@@ -1,0 +1,33 @@
+{% extends "gestion/base.html" %}
+
+{% block title %}Cliente - Alke Wallet{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    {% if object %}
+        <h2>Editar cliente</h2>
+        <p>Modifica los datos del cliente.</p>
+    {% else %}
+        <h2>Nuevo cliente</h2>
+        <p>Ingresa los datos del nuevo cliente.</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-success">
+            Guardar
+        </button>
+
+        <a href="{% url 'cliente-list' %}" class="btn btn-secondary">
+            Cancelar
+        </a>
+    </form>
+
+</div>
+
+{% endblock %}

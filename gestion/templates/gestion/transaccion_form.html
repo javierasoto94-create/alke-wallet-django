@@ -1,0 +1,33 @@
+{% extends "gestion/base.html" %}
+
+{% block title %}Transacción - Alke Wallet{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    {% if object %}
+        <h2>Editar transacción</h2>
+        <p>Modifica los datos de la transacción.</p>
+    {% else %}
+        <h2>Nueva transacción</h2>
+        <p>Ingresa los datos de la nueva transacción.</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-success">
+            Guardar
+        </button>
+
+        <a href="{% url 'transaccion-list' %}" class="btn btn-secondary">
+            Cancelar
+        </a>
+    </form>
+
+</div>
+
+{% endblock %}

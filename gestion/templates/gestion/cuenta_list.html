@@ -1,0 +1,78 @@
+{% extends "gestion/base.html" %}
+
+{% block title %}Cuentas - Alke Wallet{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <h2>Cuentas</h2>
+
+    <p>Listado de cuentas registradas en Alke Wallet.</p>
+
+    <a href="{% url 'cuenta-create' %}" class="btn btn-success">
+        + Nueva cuenta
+    </a>
+</div>
+
+<div class="card">
+
+    {% if cuentas %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Cliente</th>
+                <th>Saldo</th>
+                <th>Moneda</th>
+                <th>Activa</th>
+                <th>Fecha de creación</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for cuenta in cuentas %}
+            <tr>
+                <td>{{ cuenta.numero }}</td>
+                <td>{{ cuenta.cliente }}</td>
+                <td>{{ cuenta.saldo }}</td>
+                <td>{{ cuenta.get_moneda_display }}</td>
+                <td>
+                    {% if cuenta.activa %}
+                        Sí
+                    {% else %}
+                        No
+                    {% endif %}
+                </td>
+                <td>{{ cuenta.fecha_creacion|date:"d/m/Y H:i" }}</td>
+
+                <td>
+                    <a
+                        href="{% url 'cuenta-update' cuenta.pk %}"
+                        class="btn btn-primary"
+                    >
+                        Editar
+                    </a>
+
+                    <a
+                        href="{% url 'cuenta-delete' cuenta.pk %}"
+                        class="btn btn-danger"
+                    >
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+
+    <p>No hay cuentas registradas.</p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

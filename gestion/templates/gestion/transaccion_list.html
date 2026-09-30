@@ -1,0 +1,70 @@
+{% extends "gestion/base.html" %}
+
+{% block title %}Transacciones - Alke Wallet{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <h2>Transacciones</h2>
+
+    <p>Listado de transacciones registradas en Alke Wallet.</p>
+
+    <a href="{% url 'transaccion-create' %}" class="btn btn-success">
+        + Nueva transacción
+    </a>
+</div>
+
+<div class="card">
+
+    {% if transacciones %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Cuenta</th>
+                    <th>Tipo</th>
+                    <th>Monto</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for transaccion in transacciones %}
+                    <tr>
+                        <td>{{ transaccion.cuenta }}</td>
+                        <td>{{ transaccion.get_tipo_display }}</td>
+                        <td>{{ transaccion.monto }}</td>
+                        <td>{{ transaccion.descripcion }}</td>
+                        <td>{{ transaccion.fecha|date:"d/m/Y H:i" }}</td>
+
+                        <td>
+                            <a
+                                href="{% url 'transaccion-update' transaccion.pk %}"
+                                class="btn btn-primary"
+                            >
+                                Editar
+                            </a>
+
+                            <a
+                                href="{% url 'transaccion-delete' transaccion.pk %}"
+                                class="btn btn-danger"
+                            >
+                                Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+
+        <p>No hay transacciones registradas.</p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
